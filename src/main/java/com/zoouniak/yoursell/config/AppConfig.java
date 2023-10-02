@@ -1,6 +1,6 @@
-package com.zoouniak.config;
+package com.zoouniak.yoursell.config;
 
-import com.zoouniak.repository.UserRepository;
+import com.zoouniak.yoursell.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

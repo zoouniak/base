@@ -1,4 +1,4 @@
-package com.zoouniak.config;
+package com.zoouniak.yoursell.config;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;

@@ -1,4 +1,4 @@
-package com.zoouniak.entity;
+package com.zoouniak.yoursell.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -18,7 +18,7 @@ import java.util.List;
 public class User implements UserDetails {
     @Id
     @Column(name = "user_id")
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String email;
     private String password;

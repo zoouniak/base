@@ -1,4 +1,4 @@
-package com.zoouniak.entity;
+package com.zoouniak.yoursell.entity;
 
 import javax.persistence.Embeddable;
 

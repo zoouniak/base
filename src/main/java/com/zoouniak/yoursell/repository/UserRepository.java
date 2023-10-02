@@ -1,6 +1,6 @@
-package com.zoouniak.repository;
+package com.zoouniak.yoursell.repository;
 
-import com.zoouniak.entity.User;
+import com.zoouniak.yoursell.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

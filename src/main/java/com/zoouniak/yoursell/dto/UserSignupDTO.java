@@ -1,4 +1,4 @@
-package com.zoouniak.dto;
+package com.zoouniak.yoursell.dto;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

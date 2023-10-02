@@ -1,4 +1,4 @@
-package com.zoouniak.controller;
+package com.zoouniak.yoursell.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 @RequiredArgsConstructor
 public class HomeController {
-    @GetMapping("/")
+    @GetMapping("/hello")
     public ResponseEntity home() {
         log.info("homehome");
         return ResponseEntity.ok().build();

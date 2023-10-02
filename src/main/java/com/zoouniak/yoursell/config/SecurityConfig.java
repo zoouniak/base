@@ -1,4 +1,4 @@
-package com.zoouniak.config;
+package com.zoouniak.yoursell.config;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -27,7 +27,7 @@ public class SecurityConfig {
                 .disable()
 
                 .authorizeHttpRequests()
-                .antMatchers("/api/user/signup")
+                .antMatchers("/api/user/signup","/hello")
                 .permitAll()
                 .antMatchers("/api/**")
                 .authenticated()

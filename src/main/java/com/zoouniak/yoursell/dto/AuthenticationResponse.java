@@ -1,4 +1,4 @@
-package com.zoouniak.dto;
+package com.zoouniak.yoursell.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -7,9 +7,9 @@ import lombok.NoArgsConstructor;
 
 @Data
 @Builder
-@NoArgsConstructor
 @AllArgsConstructor
-public class  AuthenticationRequest {
-    private String email;
-    private String password;
+@NoArgsConstructor
+public class AuthenticationResponse {
+    private String token;
+
 }

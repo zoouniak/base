@@ -1,4 +1,4 @@
-package com.zoouniak.config;
+package com.zoouniak.yoursell.config;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.lang.NonNull;

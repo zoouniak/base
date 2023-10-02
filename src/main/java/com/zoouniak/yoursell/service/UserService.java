@@ -1,12 +1,12 @@
-package com.zoouniak.service;
+package com.zoouniak.yoursell.service;
 
-import com.zoouniak.config.JwtService;
-import com.zoouniak.dto.AuthenticationRequest;
-import com.zoouniak.dto.AuthenticationResponse;
-import com.zoouniak.dto.UserSignupDTO;
-import com.zoouniak.entity.Role;
-import com.zoouniak.entity.User;
-import com.zoouniak.repository.UserRepository;
+import com.zoouniak.yoursell.config.JwtService;
+import com.zoouniak.yoursell.dto.AuthenticationRequest;
+import com.zoouniak.yoursell.dto.AuthenticationResponse;
+import com.zoouniak.yoursell.dto.UserSignupDTO;
+import com.zoouniak.yoursell.entity.Role;
+import com.zoouniak.yoursell.entity.User;
+import com.zoouniak.yoursell.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
