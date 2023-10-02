@@ -1,7 +1,7 @@
 package com.zoouniak.yoursell.service;
 
 import com.zoouniak.yoursell.config.JwtService;
-import com.zoouniak.yoursell.dto.AuthenticationRequest;
+import com.zoouniak.yoursell.dto.LoginDTO;
 import com.zoouniak.yoursell.dto.AuthenticationResponse;
 import com.zoouniak.yoursell.dto.UserSignupDTO;
 import com.zoouniak.yoursell.entity.Role;
@@ -22,6 +22,7 @@ public class UserService {
     private final AuthenticationManager authenticationManager;
 
     public AuthenticationResponse signup(UserSignupDTO signupDTO) {
+
         User user = User.builder()
                 .email(signupDTO.getEmail())
                 .password(passwordEncoder.encode(signupDTO.getPassword()))
@@ -38,7 +39,7 @@ public class UserService {
                 .build();
     }
 
-    public AuthenticationResponse authenticate(AuthenticationRequest request) {
+    public AuthenticationResponse authenticate(LoginDTO request) {
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         request.getEmail(),

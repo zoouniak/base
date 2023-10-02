@@ -27,7 +27,7 @@ public class SecurityConfig {
                 .disable()
 
                 .authorizeHttpRequests()
-                .antMatchers("/api/user/signup","/hello")
+                .antMatchers("/api/user/signup","/hello","/api/user/login")
                 .permitAll()
                 .antMatchers("/api/**")
                 .authenticated()

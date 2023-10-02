@@ -1,6 +1,6 @@
 package com.zoouniak.yoursell.controller;
 
-import com.zoouniak.yoursell.dto.AuthenticationRequest;
+import com.zoouniak.yoursell.dto.LoginDTO;
 import com.zoouniak.yoursell.dto.AuthenticationResponse;
 import com.zoouniak.yoursell.dto.UserSignupDTO;
 import com.zoouniak.yoursell.service.UserService;
@@ -23,9 +23,10 @@ public class UserController {
 
     }
 
-    @PostMapping("/authenticate")
-    public ResponseEntity<AuthenticationResponse> signup(@RequestBody AuthenticationRequest signupDTO) {
+    @PostMapping("/login")
+    public ResponseEntity<AuthenticationResponse> signup(@RequestBody LoginDTO signupDTO) {
         return ResponseEntity.ok(userService.authenticate(signupDTO));
-
     }
+
+
 }
