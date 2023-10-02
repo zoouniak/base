@@ -6,6 +6,7 @@ import com.zoouniak.yoursell.dto.AuthenticationResponse;
 import com.zoouniak.yoursell.dto.UserSignupDTO;
 import com.zoouniak.yoursell.entity.Role;
 import com.zoouniak.yoursell.entity.User;
+import com.zoouniak.yoursell.exception.DuplicatedUserException;
 import com.zoouniak.yoursell.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -23,6 +24,9 @@ public class UserService {
 
     public AuthenticationResponse signup(UserSignupDTO signupDTO) {
 
+        if(userRepository.findByEmail(signupDTO.getEmail()).isPresent()){
+            throw new DuplicatedUserException();
+        }
         User user = User.builder()
                 .email(signupDTO.getEmail())
                 .password(passwordEncoder.encode(signupDTO.getPassword()))

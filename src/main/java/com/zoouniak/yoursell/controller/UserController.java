@@ -3,6 +3,7 @@ package com.zoouniak.yoursell.controller;
 import com.zoouniak.yoursell.dto.LoginDTO;
 import com.zoouniak.yoursell.dto.AuthenticationResponse;
 import com.zoouniak.yoursell.dto.UserSignupDTO;
+import com.zoouniak.yoursell.exception.DuplicatedUserException;
 import com.zoouniak.yoursell.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -18,9 +19,12 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping("/signup")
-    public ResponseEntity<AuthenticationResponse> signup(@RequestBody UserSignupDTO signupDTO) {
-        return ResponseEntity.ok(userService.signup(signupDTO));
-
+    public ResponseEntity signup(@RequestBody UserSignupDTO signupDTO) {
+        try{
+            return ResponseEntity.ok(userService.signup(signupDTO));
+        }catch (DuplicatedUserException e){
+            return ResponseEntity.badRequest().body("이미 존재하는 이메일입니다");
+        }
     }
 
     @PostMapping("/login")
