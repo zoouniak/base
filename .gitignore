@@ -40,5 +40,6 @@ out/
 ### Gradle ###
 .gradle
 build/
-build.gradle
 .gitignore
+/src/main/resources/application.properties
+/src/main/resources/application.yml
