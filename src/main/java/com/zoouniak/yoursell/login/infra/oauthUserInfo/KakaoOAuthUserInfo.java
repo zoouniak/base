@@ -1,6 +1,13 @@
 package com.zoouniak.yoursell.login.infra.oauthUserInfo;
 
-public record KakaoOAuthUserInfo(String socialId, String nickname) implements OAuthUserInfo {
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+public record KakaoOAuthUserInfo(
+        @JsonProperty("id")
+        String socialId,
+        @JsonProperty("kakao_account")
+        KakaoAccount kakaoAccount
+) implements OAuthUserInfo {
     @Override
     public String getLoginId() {
         return socialId();
@@ -8,6 +15,21 @@ public record KakaoOAuthUserInfo(String socialId, String nickname) implements OA
 
     @Override
     public String getNickname() {
-        return nickname();
+        return kakaoAccount.profile.nickname();
+    }
+
+    public record KakaoAccount(
+            Profile profile
+    ) {
+
+    }
+
+    public record Profile(
+            @JsonProperty("nickname")
+            String nickname
+    ) {
+        public String nickname() {
+            return nickname;
+        }
     }
 }

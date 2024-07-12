@@ -77,7 +77,6 @@ public class KakaoOAuthProvider implements OAuthProvider {
     public OAuthUserInfo getUserInfo(final String code) {
         // 카카오에 access token 요청
         String accessToken = getAccessToken(code);
-        System.out.println(accessToken);
         // access token으로 사용자 정보 요청
         final ResponseEntity<KakaoOAuthUserInfo> userInfo = new RestTemplate().exchange(
                 userUri,
