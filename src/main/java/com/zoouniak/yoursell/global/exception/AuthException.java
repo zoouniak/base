@@ -1,7 +1,14 @@
 package com.zoouniak.yoursell.global.exception;
 
-public class AuthException extends BaseException{
-    public AuthException(ExceptionCode exceptionCode) {
-        super(exceptionCode);
+import lombok.Getter;
+
+@Getter
+public class AuthException extends RuntimeException {
+    private final int code;
+    private final String message;
+
+    public AuthException(final ExceptionCode exceptionCode) {
+        this.code = exceptionCode.getErrorCode();
+        this.message = exceptionCode.getMessage();
     }
 }
