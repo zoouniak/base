@@ -17,13 +17,10 @@ public class User {
     @Column(unique = true)
     private String loginId;
     private String nickname;
-    @Enumerated(EnumType.STRING)
-    private Role role;
 
     @Builder
-    public User(String loginId, String nickname, Role role) {
+    public User(String loginId, String nickname) {
         this.loginId = loginId;
         this.nickname = nickname;
-        this.role = role;
     }
 }

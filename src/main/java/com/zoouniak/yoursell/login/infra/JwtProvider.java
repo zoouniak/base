@@ -13,8 +13,7 @@ import java.util.Base64;
 import java.util.Date;
 import java.util.Map;
 
-import static com.zoouniak.yoursell.global.exception.ExceptionCode.EXPIRED_TOKEN;
-import static com.zoouniak.yoursell.global.exception.ExceptionCode.INVALID_TOKEN;
+import static com.zoouniak.yoursell.global.exception.ExceptionCode.*;
 
 @Component
 public class JwtProvider {
@@ -37,25 +36,29 @@ public class JwtProvider {
         this.refreshExpirationTime = refreshExpirationTime;
     }
 
-    public AuthTokens generateLoginToken(final String userInfo) {
-        final String accessToken = createToken(userInfo, accessExpirationTime);
+    public AuthTokens generateLoginToken(final String userId) {
+        final String accessToken = createToken(userId, accessExpirationTime);
         final String refreshToken = createToken(EMPTY_SUBJECT, refreshExpirationTime);
 
         return new AuthTokens(accessToken, refreshToken);
     }
 
-    public String createToken(final String userInfo, final Long tokenValidTime) {
+    public String generateAccessToken(final String userId) {
+        return createToken(userId, accessExpirationTime);
+    }
+
+    private String createToken(final String userId, final Long tokenValidTime) {
         final Date now = new Date();
 
         return Jwts.builder()
                 .setHeader(createHeader())
-                .setSubject(userInfo)
+                .setSubject(userId)
                 .signWith(secretKey, signatureAlgorithm)
                 .setExpiration(createExpireDate(now, tokenValidTime))
                 .compact();
     }
 
-    public String getUserNameFromToken(String accessToken) {
+    public String getUserIdFromToken(String accessToken) {
         Claims claims = getClaims(accessToken);
 
         return claims.getSubject();
@@ -68,7 +71,15 @@ public class JwtProvider {
         return "";
     }
 
-    public boolean isTokenExpired(String token) {
+    public boolean isInvalidAccessTokenAndValidRefreshToken(String accessToken, String refreshToken) {
+        return isTokenExpired(accessToken) && !isTokenExpired(refreshToken);
+    }
+
+    public boolean isValidAccessTokenAndValidRefreshToken(String accessToken, String refreshToken) {
+        return !isTokenExpired(accessToken) && !isTokenExpired(refreshToken);
+    }
+
+    private boolean isTokenExpired(String token) {
         Claims claims = getClaims(token);
         return claims.getExpiration().before(new Date());
     }
@@ -90,9 +101,17 @@ public class JwtProvider {
                     .parseClaimsJws(token)
                     .getBody();
         } catch (ExpiredJwtException e) {
-            throw new AuthException(EXPIRED_TOKEN);
+            throw new AuthException(EXPIRED_ACCESS_TOKEN);
         } catch (JwtException e) {
             throw new AuthException(INVALID_TOKEN);
         }
+    }
+
+
+    public void validateTokens(AuthTokens authTokens) {
+        if (isTokenExpired(authTokens.accessToken()))
+            throw new AuthException(EXPIRED_ACCESS_TOKEN);
+        if (isTokenExpired(authTokens.refreshToken()))
+            throw new AuthException(EXPIRED_REFRESH_TOKEN);
     }
 }
