@@ -1,7 +1,8 @@
 package com.zoouniak.yoursell.login.infra;
 
+import com.zoouniak.yoursell.global.exception.InvalidJwtException;
+import com.zoouniak.yoursell.global.exception.JwtExpiredException;
 import com.zoouniak.yoursell.login.dto.response.AuthTokens;
-import com.zoouniak.yoursell.global.exception.AuthException;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
@@ -80,8 +81,12 @@ public class JwtProvider {
     }
 
     private boolean isTokenExpired(String token) {
-        Claims claims = getClaims(token);
-        return claims.getExpiration().before(new Date());
+        try {
+            getClaims(token);
+        } catch (JwtExpiredException e) {
+            return true;
+        }
+        return false;
     }
 
     private Map<String, Object> createHeader() {
@@ -101,17 +106,17 @@ public class JwtProvider {
                     .parseClaimsJws(token)
                     .getBody();
         } catch (ExpiredJwtException e) {
-            throw new AuthException(EXPIRED_ACCESS_TOKEN);
+            throw new JwtExpiredException(EXPIRED_ACCESS_TOKEN);
         } catch (JwtException e) {
-            throw new AuthException(INVALID_TOKEN);
+            throw new InvalidJwtException(INVALID_TOKEN);
         }
     }
 
 
     public void validateTokens(AuthTokens authTokens) {
         if (isTokenExpired(authTokens.accessToken()))
-            throw new AuthException(EXPIRED_ACCESS_TOKEN);
+            throw new JwtExpiredException(EXPIRED_ACCESS_TOKEN);
         if (isTokenExpired(authTokens.refreshToken()))
-            throw new AuthException(EXPIRED_REFRESH_TOKEN);
+            throw new JwtExpiredException(EXPIRED_REFRESH_TOKEN);
     }
 }
